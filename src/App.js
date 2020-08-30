@@ -10,13 +10,19 @@ export default class App extends Component {
 	state = {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
+		spinner: true,
 	};
 
 	componentDidMount() {
+		window.addEventListener('load', this.handleLoad);
+
 		if (window.innerWidth < 1440) {
 			this.setState({ placeFixedNav: false });
 		}
 	}
+	handleLoad = () => {
+		this.setState({ spinner: false });
+	};
 
 	showcaseRef = React.createRef();
 	aboutRef = React.createRef();
@@ -54,7 +60,7 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { placeFixedNav } = this.state;
+		const { placeFixedNav, spinner } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -77,29 +83,37 @@ export default class App extends Component {
 		));
 
 		return (
-			<div className='parallax'>
-				{placeFixedNav ? (
-					<div className='fixed-nav'>
-						<button onClick={() => this.scrollToShowcase()}>
-							{'- Home -'}
-						</button>
-						<button onClick={() => this.scrollToAbout()}>
-							{'- Über Uns -'}
-						</button>
-						<button onClick={() => this.scrollToCharacter()}>
-							{'- Charakters -'}
-						</button>
-						<button onClick={() => this.scrollToMedien()}>
-							{'- Medien -'}
-						</button>
-					</div>
-				) : null}
+			<div>
+				{spinner ? (
+					<h1>SPINNER</h1>
+				) : (
+					<div className='parallax'>
+						{placeFixedNav ? (
+							<div className='fixed-nav'>
+								<button onClick={() => this.scrollToShowcase()}>
+									{'- Home -'}
+								</button>
+								<button onClick={() => this.scrollToAbout()}>
+									{'- Über Uns -'}
+								</button>
+								<button
+									onClick={() => this.scrollToCharacter()}
+								>
+									{'- Charakters -'}
+								</button>
+								<button onClick={() => this.scrollToMedien()}>
+									{'- Medien -'}
+								</button>
+							</div>
+						) : null}
 
-				<ShowCaseRef />
-				<AboutRef />
-				<CharacterRef />
-				<MedienRef />
-				<Footer />
+						<ShowCaseRef />
+						<AboutRef />
+						<CharacterRef />
+						<MedienRef />
+						<Footer />
+					</div>
+				)}
 			</div>
 		);
 	}
