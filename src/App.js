@@ -5,6 +5,7 @@ import About from './components/About';
 import Characters from './components/Characters';
 import Medien from './components/Medien';
 import Footer from './components/Footer';
+import Spinner from './components/Spinner';
 import axios from 'axios';
 import regions from './regions.json';
 
@@ -13,9 +14,12 @@ export default class App extends Component {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
 		country: '',
+		loading: true,
 	};
 
 	componentDidMount() {
+		this.demoAsyncCall().then(() => this.setState({ loading: false }));
+
 		axios
 			.get(`https://ipinfo.io?token=${process.env.REACT_APP_TOKEN}`)
 			.then((res) => this.setState({ country: res.data.country }))
@@ -25,6 +29,11 @@ export default class App extends Component {
 			this.setState({ placeFixedNav: false });
 		}
 	}
+
+	demoAsyncCall = () => {
+		return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+	};
+
 	handleLoad = () => {
 		this.setState({ spinner: false });
 	};
@@ -65,7 +74,7 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { placeFixedNav } = this.state;
+		const { placeFixedNav, loading } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -95,36 +104,36 @@ export default class App extends Component {
 			}
 		}
 
+		if (loading) {
+			return null;
+		}
+
 		return (
 			<div>
-				{regionInfo === undefined ? null : (
-					<div className='parallax'>
-						{placeFixedNav ? (
-							<div className='fixed-nav'>
-								<button onClick={() => this.scrollToShowcase()}>
-									{'- Home -'}
-								</button>
-								<button onClick={() => this.scrollToAbout()}>
-									{'- Über Uns -'}
-								</button>
-								<button
-									onClick={() => this.scrollToCharacter()}
-								>
-									{'- Charakters -'}
-								</button>
-								<button onClick={() => this.scrollToMedien()}>
-									{'- Medien -'}
-								</button>
-							</div>
-						) : null}
+				<div className='parallax'>
+					{placeFixedNav ? (
+						<div className='fixed-nav'>
+							<button onClick={() => this.scrollToShowcase()}>
+								{'- Home -'}
+							</button>
+							<button onClick={() => this.scrollToAbout()}>
+								{'- Über Uns -'}
+							</button>
+							<button onClick={() => this.scrollToCharacter()}>
+								{'- Charakters -'}
+							</button>
+							<button onClick={() => this.scrollToMedien()}>
+								{'- Medien -'}
+							</button>
+						</div>
+					) : null}
 
-						<ShowCaseRef regionInfo={regionInfo} />
-						<AboutRef />
-						<CharacterRef />
-						<MedienRef />
-						<Footer />
-					</div>
-				)}
+					<ShowCaseRef regionInfo={regionInfo} />
+					<AboutRef />
+					<CharacterRef />
+					<MedienRef />
+					<Footer />
+				</div>
 			</div>
 		);
 	}
