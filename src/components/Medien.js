@@ -99,8 +99,6 @@ export class Medien extends Component {
 			<div className='medien' ref={forwardedRef} {...rest}>
 				<div className='options'>
 					{Object.keys(optionState).map((each, i) => {
-						// console.log(each);
-						// console.log(optionState[each]);
 						return (
 							<button
 								key={i}

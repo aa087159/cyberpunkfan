@@ -5,16 +5,21 @@ import About from './components/About';
 import Characters from './components/Characters';
 import Medien from './components/Medien';
 import Footer from './components/Footer';
+import axios from 'axios';
+import regions from './regions.json';
 
 export default class App extends Component {
 	state = {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
-		spinner: true,
+		country: '',
 	};
 
 	componentDidMount() {
-		window.addEventListener('load', this.handleLoad);
+		axios
+			.get(`https://ipinfo.io?token=${process.env.REACT_APP_TOKEN}`)
+			.then((res) => this.setState({ country: res.data.country }))
+			.catch((err) => console.log(err));
 
 		if (window.innerWidth < 1440) {
 			this.setState({ placeFixedNav: false });
@@ -60,7 +65,7 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { placeFixedNav, spinner } = this.state;
+		const { placeFixedNav } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -82,11 +87,17 @@ export default class App extends Component {
 			</Medien>
 		));
 
+		let regionInfo;
+		console.log(regionInfo);
+		for (const key in regions) {
+			if (regions[key].abbre === this.state.country) {
+				regionInfo = regions[key];
+			}
+		}
+
 		return (
 			<div>
-				{spinner ? (
-					<h1>SPINNER</h1>
-				) : (
+				{regionInfo === undefined ? null : (
 					<div className='parallax'>
 						{placeFixedNav ? (
 							<div className='fixed-nav'>
@@ -107,7 +118,7 @@ export default class App extends Component {
 							</div>
 						) : null}
 
-						<ShowCaseRef />
+						<ShowCaseRef regionInfo={regionInfo} />
 						<AboutRef />
 						<CharacterRef />
 						<MedienRef />

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import logo from '../img/page1/logo.png';
 import characters from '../img/page1/characters.png';
 import Preorder2nd from './Preorder2nd';
-import axios from 'axios';
-import regions from '../regions.json';
 import xbox from '../img/page1/xbox.png';
 import ps4 from '../img/page1/ps4.png';
 import pc from '../img/page1/pc.png';
@@ -19,11 +17,6 @@ export class ShowCase extends Component {
 	};
 
 	componentDidMount() {
-		axios
-			.get(`https://ipinfo.io?token=${process.env.REACT_APP_TOKEN}`)
-			.then((res) => this.setState({ country: res.data.country }))
-			.catch((err) => console.log(err));
-
 		if (window.innerWidth < 767) {
 			this.setState({ placeSingle: true });
 		}
@@ -38,14 +31,7 @@ export class ShowCase extends Component {
 
 	render() {
 		const { clicked, platform, placeSingle } = this.state;
-		let regionInfo;
-
-		for (const key in regions) {
-			if (regions[key].abbre === this.state.country) {
-				regionInfo = regions[key];
-			}
-		}
-		const { forwardedRef, ...rest } = this.props;
+		const { forwardedRef, regionInfo, ...rest } = this.props;
 		return (
 			<div className='showcase' ref={forwardedRef} {...rest}>
 				<nav>

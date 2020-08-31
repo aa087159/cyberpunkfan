@@ -5,13 +5,13 @@ import Gallery from 'react-grid-gallery';
 
 const getConfigurable = () => ({
 	showArrows: true,
-	showStatus: false,
+	showStatus: true,
 	showIndicators: false,
 	showThumbs: false,
 	autoPlay: false,
 	infiniteLoop: true,
-	swipeable: true,
-	dynamicHeight: true,
+	swipeable: false,
+	dynamicHeight: false,
 	emulateTouch: true,
 });
 
@@ -31,7 +31,14 @@ export class MediaModule extends Component {
 		}
 		return (
 			<div className='screenshots'>
-				<Carousel {...getConfigurable()}>
+				<Carousel
+					{...getConfigurable()}
+					statusFormatter={(current, total) => (
+						<>
+							<span className='red-status'>{` 0${current} / 0${total} `}</span>{' '}
+						</>
+					)}
+				>
 					{slideArr.map((each, i) => {
 						return (
 							<Gallery

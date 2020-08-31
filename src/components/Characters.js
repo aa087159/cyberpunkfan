@@ -43,9 +43,7 @@ export class Medien extends Component {
 					{...getConfigurableProps()}
 					statusFormatter={(current, total) => (
 						<>
-							{`< `}{' '}
 							<span className='red-status'>{` 0${current} / 0${total} `}</span>{' '}
-							{` >`}
 						</>
 					)}
 					className='carousel'
