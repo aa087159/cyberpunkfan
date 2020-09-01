@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { boolean, number } from '@storybook/addon-knobs';
-import v from '../img/page2/V2.png';
-import Silver from '../img/page2/S2.png';
-import Jackie from '../img/page2/J2.png';
+import v from '../img/page2/V2.jpg';
+import Silver from '../img/page2/S2.jpg';
+import Jackie from '../img/page2/J2.jpg';
 
 const tooglesGroupId = 'Toggles';
 const valuesGroupId = 'Values';

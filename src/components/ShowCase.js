@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import logo from '../img/page1/logo.png';
-import characters from '../img/page1/characters.png';
+import logo from '../img/page1/logo.jpg';
+import characters from '../img/page1/ch2.jpg';
 import Preorder2nd from './Preorder2nd';
-import xbox from '../img/page1/xbox.png';
-import ps4 from '../img/page1/ps4.png';
-import pc from '../img/page1/pc.png';
-import man from '../img/page1/ch1.png';
-import wall from '../img/page1/P1wall.png';
+import xbox from '../img/page1/xbox.jpg';
+import ps4 from '../img/page1/ps4.jpg';
+import pc from '../img/page1/pc.jpg';
+import man from '../img/page1/ch1.jpg';
 
 export class ShowCase extends Component {
 	state = {
@@ -22,7 +21,7 @@ export class ShowCase extends Component {
 		if (window.innerWidth < 767) {
 			this.setState({ placeSingle: true });
 		}
-		let imageList = [characters, wall, logo, xbox, ps4, pc, man];
+		let imageList = [characters, logo, xbox, ps4, pc, man];
 		imageList.forEach((image) => {
 			new Image().src = image;
 		});
@@ -39,14 +38,7 @@ export class ShowCase extends Component {
 		const { clicked, platform, placeSingle } = this.state;
 		const { forwardedRef, regionInfo, ...rest } = this.props;
 		return (
-			<div
-				className='showcase'
-				ref={forwardedRef}
-				{...rest}
-				style={{
-					backgroundImage: `url(${wall})`,
-				}}
-			>
+			<div className='showcase' ref={forwardedRef} {...rest}>
 				<nav>
 					<button src='http://localhost:3000/'>
 						<img src={logo} alt='' />

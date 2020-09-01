@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import character from '../img/page3/C2.png';
+import character from '../img/page3/C2.jpg';
 import slogan1 from '../img/page3/slogan1.jpg';
 import slogan2 from '../img/page3/slogan2.jpg';
 import slogan3 from '../img/page3/slogan3.jpg';
