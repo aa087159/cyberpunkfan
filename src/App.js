@@ -5,25 +5,21 @@ import About from './components/About';
 import Characters from './components/Characters';
 import Medien from './components/Medien';
 import Footer from './components/Footer';
-import axios from 'axios';
 import regions from './regions.json';
 
 export default class App extends Component {
 	state = {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
-		country: '',
+		loading: true,
 	};
 
 	componentDidMount() {
-		axios
-			.get(`https://ipinfo.io?token=${process.env.REACT_APP_TOKEN}`)
-			.then((res) => this.setState({ country: res.data.country }))
-			.catch((err) => console.log(err));
-
 		if (window.innerWidth < 1440) {
 			this.setState({ placeFixedNav: false });
 		}
+
+		this.demoAsyncCall().then(() => this.setState({ loading: false }));
 	}
 
 	showcaseRef = React.createRef();
@@ -61,8 +57,12 @@ export default class App extends Component {
 		});
 	};
 
+	demoAsyncCall = () => {
+		return new Promise((resolve) => setTimeout(() => resolve(), 1000));
+	};
+
 	render() {
-		const { placeFixedNav } = this.state;
+		const { placeFixedNav, loading } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -84,9 +84,14 @@ export default class App extends Component {
 			</Medien>
 		));
 
+		if (loading) {
+			// if your component doesn't have to wait for an async action, remove this block
+			return null; // render null when app is not ready
+		}
+
 		let regionInfo;
 		for (const key in regions) {
-			if (regions[key].abbre === this.state.country) {
+			if (regions[key].abbre === 'DE') {
 				regionInfo = regions[key];
 			}
 		}

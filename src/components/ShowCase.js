@@ -15,22 +15,15 @@ export class ShowCase extends Component {
 		country: '',
 		regionInfo: [],
 		placeSingle: false,
+		imageIsReady: false,
 	};
 
 	componentDidMount() {
 		if (window.innerWidth < 767) {
 			this.setState({ placeSingle: true });
 		}
-		const imagesToBePreloaded = [
-			logo,
-			characters,
-			xbox,
-			ps4,
-			pc,
-			man,
-			wall,
-		];
-		imagesToBePreloaded.forEach((image) => {
+		let imageList = [characters, wall, logo, xbox, ps4, pc, man];
+		imageList.forEach((image) => {
 			new Image().src = image;
 		});
 	}
@@ -50,7 +43,9 @@ export class ShowCase extends Component {
 				className='showcase'
 				ref={forwardedRef}
 				{...rest}
-				style={{ backgroundImage: `url(${wall})` }}
+				style={{
+					backgroundImage: `url(${wall})`,
+				}}
 			>
 				<nav>
 					<button src='http://localhost:3000/'>
