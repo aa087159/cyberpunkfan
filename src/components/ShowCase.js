@@ -77,43 +77,36 @@ export class ShowCase extends Component {
 							/>
 						</div>
 					) : (
-						<>
-							{regionInfo ? (
-								<div
-									className={`preorder ${
-										Object.keys(regionInfo.platform)
-											.length > 2
-											? 'platform-3'
-											: Object.keys(regionInfo.platform)
-													.length === 2
-											? 'platform-2'
-											: 'platform-1'
-									}`}
-								>
-									<p className='title'>PLATTFORM WÄHLEN</p>
-									{Object.keys(regionInfo.platform).map(
-										(platform, i) => (
-											<button
-												onClick={(e) =>
-													this.clickHandler(e)
-												}
-												key={i}
-												name={platform}
-												style={{
-													backgroundImage: `url(${
-														platform === 'xbox'
-															? xbox
-															: platform === 'ps4'
-															? ps4
-															: pc
-													})`,
-												}}
-											></button>
-										)
-									)}
-								</div>
-							) : null}
-						</>
+						<div
+							className={`preorder ${
+								Object.keys(regionInfo.platform).length > 2
+									? 'platform-3'
+									: Object.keys(regionInfo.platform)
+											.length === 2
+									? 'platform-2'
+									: 'platform-1'
+							}`}
+						>
+							<p className='title'>PLATTFORM WÄHLEN</p>
+							{Object.keys(regionInfo.platform).map(
+								(platform, i) => (
+									<button
+										onClick={(e) => this.clickHandler(e)}
+										key={i}
+										name={platform}
+										style={{
+											backgroundImage: `url(${
+												platform === 'xbox'
+													? xbox
+													: platform === 'ps4'
+													? ps4
+													: pc
+											})`,
+										}}
+									></button>
+								)
+							)}
+						</div>
 					)}
 				</div>
 			</div>

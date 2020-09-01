@@ -5,7 +5,6 @@ import About from './components/About';
 import Characters from './components/Characters';
 import Medien from './components/Medien';
 import Footer from './components/Footer';
-import Spinner from './components/Spinner';
 import axios from 'axios';
 import regions from './regions.json';
 
@@ -14,12 +13,9 @@ export default class App extends Component {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
 		country: '',
-		loading: true,
 	};
 
 	componentDidMount() {
-		this.demoAsyncCall().then(() => this.setState({ loading: false }));
-
 		axios
 			.get(`https://ipinfo.io?token=${process.env.REACT_APP_TOKEN}`)
 			.then((res) => this.setState({ country: res.data.country }))
@@ -29,14 +25,6 @@ export default class App extends Component {
 			this.setState({ placeFixedNav: false });
 		}
 	}
-
-	demoAsyncCall = () => {
-		return new Promise((resolve) => setTimeout(() => resolve(), 2500));
-	};
-
-	handleLoad = () => {
-		this.setState({ spinner: false });
-	};
 
 	showcaseRef = React.createRef();
 	aboutRef = React.createRef();
@@ -74,7 +62,7 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { placeFixedNav, loading } = this.state;
+		const { placeFixedNav } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -97,6 +85,9 @@ export default class App extends Component {
 		));
 
 		let regionInfo;
+		console.log('regions');
+		console.log(regions);
+		console.log('regionInfo');
 		console.log(regionInfo);
 		for (const key in regions) {
 			if (regions[key].abbre === this.state.country) {
@@ -104,7 +95,7 @@ export default class App extends Component {
 			}
 		}
 
-		if (loading) {
+		if (!regionInfo) {
 			return null;
 		}
 
