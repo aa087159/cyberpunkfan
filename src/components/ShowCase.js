@@ -14,6 +14,7 @@ export class ShowCase extends Component {
 		country: '',
 		regionInfo: [],
 		placeSingle: false,
+		didLoad: false,
 	};
 
 	componentDidMount() {
@@ -29,20 +30,43 @@ export class ShowCase extends Component {
 		});
 	};
 
+	onLoad = () => {
+		this.setState({
+			didLoad: true,
+		});
+	};
+
 	render() {
 		const { clicked, platform, placeSingle } = this.state;
 		const { forwardedRef, regionInfo, ...rest } = this.props;
+		const style = this.state.didLoad ? {} : { visibility: 'hidden' };
 		return (
-			<div className='showcase' ref={forwardedRef} {...rest}>
+			<div
+				className='showcase'
+				ref={forwardedRef}
+				{...rest}
+				style={style}
+				onLoad={this.onLoad}
+			>
 				<nav>
 					<button src='http://localhost:3000/'>
-						<img src={logo} alt='' />
+						<img
+							src={logo}
+							alt=''
+							style={style}
+							onLoad={this.onLoad}
+						/>
 					</button>
 				</nav>
 
 				<div className='main'>
 					<div className='showcase-characters'>
-						<img src={placeSingle ? man : characters} alt='' />
+						<img
+							src={placeSingle ? man : characters}
+							alt=''
+							style={style}
+							onLoad={this.onLoad}
+						/>
 					</div>
 					<div className='dynamics'>
 						<div className='dyn left-dyn'></div>

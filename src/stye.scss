@@ -1,10 +1,10 @@
 @font-face {
-	font-family: ubuntu;
+	font-family: GeosansLight;
 	src: url(/font/GeosansLight.ttf);
 }
 
 * {
-	font-family: ubuntu;
+	font-family: GeosansLight;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -1723,24 +1723,60 @@
 }
 
 //Spinner
-
-.loader:empty {
-	position: absolute;
-	top: calc(50% - 4em);
-	left: calc(50% - 4em);
-	width: 6em;
-	height: 6em;
-	border: 1.1em solid rgba(0, 0, 0, 0.2);
-	border-left: 1.1em solid #000000;
-	border-radius: 50%;
-	animation: load8 1.1s infinite linear;
+body {
+	background: #000;
 }
 
-@keyframes load8 {
-	0% {
-		transform: rotate(0deg);
+.glitch:empty {
+	color: white;
+	font-size: 5vw;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 35vw;
+	height: 10vw;
+}
+@keyframes noise-anim {
+	$steps: 20;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(100);
+			$bottom: random(101 - $top);
+			clip-path: inset(#{$top}% 0 #{$bottom}% 0);
+		}
 	}
-	100% {
-		transform: rotate(360deg);
+}
+.glitch:empty::after {
+	content: attr(data-text);
+	position: absolute;
+	left: 2px;
+	text-shadow: -1px 0 red;
+	top: 0;
+	color: white;
+	background: black;
+	overflow: hidden;
+	animation: noise-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-anim-2 {
+	$steps: 20;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			$top: random(30);
+			$bottom: random(31 - $top);
+			clip-path: inset(#{$top}% 0 #{$bottom}% 0);
+		}
 	}
+}
+.glitch:empty::before {
+	content: attr(data-text);
+	position: absolute;
+	left: -2px;
+	text-shadow: 1px 0 blue;
+	top: 0;
+	color: white;
+	background: black;
+	overflow: hidden;
+	animation: noise-anim-2 15s infinite linear alternate-reverse;
 }

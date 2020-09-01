@@ -13,6 +13,7 @@ export default class App extends Component {
 		side: ['Home', 'Über Uns', 'Charakters', 'Medien'],
 		placeFixedNav: true,
 		country: '',
+		loading: true,
 	};
 
 	componentDidMount() {
@@ -24,6 +25,7 @@ export default class App extends Component {
 		if (window.innerWidth < 1440) {
 			this.setState({ placeFixedNav: false });
 		}
+		this.AsyncCall().then(() => this.setState({ loading: false }));
 	}
 
 	showcaseRef = React.createRef();
@@ -60,9 +62,11 @@ export default class App extends Component {
 			behavior: 'smooth',
 		});
 	};
-
+	AsyncCall = () => {
+		return new Promise((resolve) => setTimeout(() => resolve(), 1000));
+	};
 	render() {
-		const { placeFixedNav } = this.state;
+		const { placeFixedNav, loading } = this.state;
 		const ShowCaseRef = React.forwardRef((props, ref) => (
 			<ShowCase {...props} forwardedRef={this.showcaseRef}>
 				{props.children}
@@ -84,11 +88,11 @@ export default class App extends Component {
 			</Medien>
 		));
 
+		if (loading) {
+			return null;
+		}
+
 		let regionInfo;
-		console.log('regions');
-		console.log(regions);
-		console.log('regionInfo');
-		console.log(regionInfo);
 		for (const key in regions) {
 			if (regions[key].abbre === this.state.country) {
 				regionInfo = regions[key];
