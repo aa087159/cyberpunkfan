@@ -90,7 +90,6 @@ export default class App extends Component {
 				regionInfo = regions[key];
 			}
 		}
-
 		if (!regionInfo) {
 			return null;
 		}

@@ -6,6 +6,7 @@ import xbox from '../img/page1/xbox.png';
 import ps4 from '../img/page1/ps4.png';
 import pc from '../img/page1/pc.png';
 import man from '../img/page1/ch1.png';
+import wall from '../img/page1/P1wall.png';
 
 export class ShowCase extends Component {
 	state = {
@@ -14,13 +15,24 @@ export class ShowCase extends Component {
 		country: '',
 		regionInfo: [],
 		placeSingle: false,
-		didLoad: false,
 	};
 
 	componentDidMount() {
 		if (window.innerWidth < 767) {
 			this.setState({ placeSingle: true });
 		}
+		const imagesToBePreloaded = [
+			logo,
+			characters,
+			xbox,
+			ps4,
+			pc,
+			man,
+			wall,
+		];
+		imagesToBePreloaded.forEach((image) => {
+			new Image().src = image;
+		});
 	}
 
 	clickHandler = (e) => {
@@ -30,43 +42,25 @@ export class ShowCase extends Component {
 		});
 	};
 
-	onLoad = () => {
-		this.setState({
-			didLoad: true,
-		});
-	};
-
 	render() {
 		const { clicked, platform, placeSingle } = this.state;
 		const { forwardedRef, regionInfo, ...rest } = this.props;
-		const style = this.state.didLoad ? {} : { visibility: 'hidden' };
 		return (
 			<div
 				className='showcase'
 				ref={forwardedRef}
 				{...rest}
-				style={style}
-				onLoad={this.onLoad}
+				style={{ backgroundImage: `url(${wall})` }}
 			>
 				<nav>
 					<button src='http://localhost:3000/'>
-						<img
-							src={logo}
-							alt=''
-							style={style}
-							onLoad={this.onLoad}
-						/>
+						<img src={logo} alt='' />
 					</button>
 				</nav>
 
 				<div className='main'>
 					<div className='showcase-characters'>
-						<img
-							src={placeSingle ? man : characters}
-							alt=''
-							style={style}
-							onLoad={this.onLoad}
-						/>
+						<img src={placeSingle ? man : characters} alt='' />
 					</div>
 					<div className='dynamics'>
 						<div className='dyn left-dyn'></div>
