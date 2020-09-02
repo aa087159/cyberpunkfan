@@ -4,21 +4,21 @@ import MediaModule from './MediaModule';
 
 export class Medien extends Component {
 	state = {
-		options: ['videos', 'screenshots', 'wallpapers', 'concept art'],
-		video: true,
-		screenshots: false,
+		options: ['screenshots', 'wallpapers', 'concept art', 'videos'],
+		video: false,
+		screenshots: true,
 		wallpapers: false,
 		conceptArt: false,
 		optionState: {
-			video: true,
-			screenshots: false,
+			screenshots: true,
 			wallpapers: false,
 			conceptArt: false,
+			video: false,
 		},
 	};
 
 	moduleOpen = (e) => {
-		let options = ['video', 'screenshots', 'wallpapers', 'conceptArt'];
+		let options = ['screenshots', 'wallpapers', 'conceptArt', 'video'];
 		let tempOptionState = { ...this.state.optionState };
 		Object.keys(tempOptionState).forEach(
 			(each) => (tempOptionState[each] = false)
@@ -122,10 +122,10 @@ export class Medien extends Component {
 					})}
 				</div>
 
-				{video ? <Videos /> : null}
 				{screenshots ? <MediaModule pics={scr} /> : null}
 				{wallpapers ? <MediaModule pics={wp} /> : null}
 				{conceptArt ? <MediaModule pics={ca} /> : null}
+				{video ? <Videos /> : null}
 			</div>
 		);
 	}

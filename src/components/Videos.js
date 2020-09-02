@@ -36,6 +36,7 @@ export class Videos extends Component {
 			autoplaySpeed: 2000,
 		};
 		const { links } = this.state;
+		console.log('videos');
 		return (
 			<div className='video'>
 				<Slider {...settings}>
